@@ -13,14 +13,26 @@
     
     <script type="text/javascript">
     // Load the visualization library
-    google.load('visualization', '1.0', {'packages':['corechart','gauge']});
+    google.load('visualization', '1.0', {'packages':['corechart']});
     
     // When finished loading, make our charts using Charts.js
     google.setOnLoadCallback(makeCharts);
   
     function makeCharts() {
-      $("#chart").chart({
+      $("#chart-bar").chart({
         chartType:'bar',
+        columnTitles:['Answer', 'Frequency'],
+        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+      });
+      
+      $("#chart-pie").chart({
+        chartType:'pie',
+        columnTitles:['Answer', 'Frequency'],
+        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+      });
+      
+      $("#chart-line").chart({
+        chartType:'line',
         columnTitles:['Answer', 'Frequency'],
         jsonData: [["1",1],["2",4],["3",1],["4",3]]
       });
@@ -28,7 +40,9 @@
     </script>
   </head>
   <body>
-    <div id="chart"></div>
+    <div id="chart-bar"></div>
+    <div id="chart-pie"></div>
+    <div id="chart-line"></div>
   </body>
 </html>
   
