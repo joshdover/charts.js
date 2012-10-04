@@ -34,7 +34,7 @@ methods =
     
   parse: ->             
     # add columns to DataTable
-    if !(this.columnTitles is undefined)
+    if !(this.columnTitles is undefined) and !this.chartDrawn
       this.jsonData.splice(0,0,this.columnTitles)
   
     # add data to DataTable

@@ -37,7 +37,7 @@
       }
     },
     parse: function() {
-      if (!(this.columnTitles === void 0)) {
+      if (!(this.columnTitles === void 0) && !this.chartDrawn) {
         this.jsonData.splice(0, 0, this.columnTitles);
       }
       this.chartData = google.visualization.arrayToDataTable(this.jsonData);
