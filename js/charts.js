@@ -28,23 +28,26 @@
       var objectData;
       objectData = this.data('chart');
       if (objectData.url === void 0) {
-        return methods.parse.apply(objectData, arguments);
+        return methods.parse.apply(this, arguments);
       } else {
         return $.getJSON(objectData.url, function(data) {
           objectData.jsonData = data;
-          return methods.parse.apply(objectData, arguments);
+          return methods.parse.apply(this, arguments);
         });
       }
     },
     parse: function() {
-      if (!(this.columnTitles === void 0) && (!(this.url === void 0) || ((this.url === void 0) && !this.chartDrawn))) {
-        this.jsonData.splice(0, 0, this.columnTitles);
+      var objectData;
+      objectData = this.data('chart');
+      if (!(objectData.columnTitles === void 0) && (!(objectData.url === void 0) || ((objectData.url === void 0) && !objectData.chartDrawn))) {
+        objectData.jsonData.splice(0, 0, objectData.columnTitles);
       }
-      this.chartData = google.visualization.arrayToDataTable(this.jsonData);
+      objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData);
       return methods.draw.apply(this, arguments);
     },
     draw: function() {
-      var allDefaults, barDefaults, lineDefaults, pieDefaults;
+      var allDefaults, barDefaults, lineDefaults, objectData, pieDefaults;
+      objectData = this.data('chart');
       allDefaults = {
         width: 500,
         height: 300,
@@ -53,7 +56,7 @@
           easing: 'inAndOut'
         }
       };
-      if (this.chartType === 'bar') {
+      if (objectData.chartType === 'bar') {
         barDefaults = {
           legend: 'none',
           hAxis: {
@@ -61,20 +64,20 @@
           }
         };
         barDefaults = $.extend(allDefaults, barDefaults);
-        this.options = $.extend(barDefaults, this.options);
-        this.chart = new google.visualization.BarChart(this.target.get(0));
-      } else if (this.chartType === 'line') {
+        objectData.options = $.extend(barDefaults, objectData.options);
+        objectData.chart = new google.visualization.BarChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'line') {
         lineDefaults = lineDefaults = $.extend(allDefaults, lineDefaults);
-        this.options = $.extend(lineDefaults, this.options);
-        this.chart = new google.visualization.LineChart(this.target.get(0));
-      } else if (this.chartType === 'pie') {
+        objectData.options = $.extend(lineDefaults, objectData.options);
+        objectData.chart = new google.visualization.LineChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'pie') {
         pieDefaults = {};
         pieDefaults = $.extend(allDefaults, pieDefaults);
-        this.options = $.extend(pieDefaults, this.options);
-        this.chart = new google.visualization.PieChart(this.target.get(0));
+        objectData.options = $.extend(pieDefaults, objectData.options);
+        objectData.chart = new google.visualization.PieChart(objectData.target.get(0));
       }
-      this.chart.draw(this.chartData, this.options);
-      return this.chartDrawn = true;
+      objectData.chart.draw(objectData.chartData, objectData.options);
+      return objectData.chartDrawn = true;
     }
   };
 

@@ -24,25 +24,29 @@ methods =
     objectData = this.data('chart')
     
     if (objectData.url is undefined)
-      methods.parse.apply(objectData, arguments)
+      methods.parse.apply(this, arguments)
     else
       # get raw data
       $.getJSON(objectData.url, (data) ->
         objectData.jsonData = data
-        methods.parse.apply(objectData, arguments)
+        methods.parse.apply(this, arguments)
       )
     
-  parse: ->             
+  parse: ->
+    objectData = this.data('chart')
+          
     # add columns to DataTable
-    if !(this.columnTitles is undefined) and (!(this.url is undefined) or ((this.url is undefined) and !this.chartDrawn))
-      this.jsonData.splice(0,0,this.columnTitles)
+    if !(objectData.columnTitles is undefined) and (!(objectData.url is undefined) or ((objectData.url is undefined) and !objectData.chartDrawn))
+      objectData.jsonData.splice(0,0,objectData.columnTitles)
   
     # add data to DataTable
-    this.chartData = google.visualization.arrayToDataTable(this.jsonData)
+    objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData)
        
     methods.draw.apply(this, arguments)    
       
   draw: ->
+    objectData = this.data('chart')
+    
     # universal defaults
     allDefaults = 
       width:500
@@ -53,7 +57,7 @@ methods =
         
         
     # chart specifics
-    if this.chartType == 'bar'
+    if objectData.chartType == 'bar'
     
       # define default options
       barDefaults =
@@ -62,36 +66,36 @@ methods =
           minValue:0
           
       barDefaults = $.extend(allDefaults, barDefaults)
-      this.options = $.extend(barDefaults, this.options)
+      objectData.options = $.extend(barDefaults, objectData.options)
     
       # create bar chart object
       # this[0] accesses the first DOM element of the jQuery selector used eg. - $("#myChart")[0] would return the first DOM element with the id 'myChart'
-      this.chart = new google.visualization.BarChart( this.target.get(0) );
+      objectData.chart = new google.visualization.BarChart( objectData.target.get(0) );
     
-    else if this.chartType == 'line'
+    else if objectData.chartType == 'line'
           
       lineDefaults = 
 
       lineDefaults = $.extend(allDefaults, lineDefaults)
-      this.options = $.extend(lineDefaults, this.options)
+      objectData.options = $.extend(lineDefaults, objectData.options)
         
       # create bar chart object
       # this[0] accesses the first DOM element of the jQuery selector used eg. - $("#myChart")[0] would return the first DOM element with the id 'myChart'
-      this.chart = new google.visualization.LineChart( this.target.get(0) )
+      objectData.chart = new google.visualization.LineChart( objectData.target.get(0) )
       
-    else if this.chartType == 'pie'
+    else if objectData.chartType == 'pie'
       
       pieDefaults = {}
       
       pieDefaults = $.extend(allDefaults, pieDefaults)
-      this.options = $.extend(pieDefaults, this.options)
+      objectData.options = $.extend(pieDefaults, objectData.options)
       
-      this.chart = new google.visualization.PieChart( this.target.get(0) )
+      objectData.chart = new google.visualization.PieChart( objectData.target.get(0) )
       
     
     # draw the chart
-    this.chart.draw(this.chartData, this.options)
-    this.chartDrawn = true
+    objectData.chart.draw(objectData.chartData, objectData.options)
+    objectData.chartDrawn = true
 
 $.fn.chart = (method) ->
   if methods[method]
