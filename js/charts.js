@@ -44,7 +44,7 @@
       return methods.draw.apply(this, arguments);
     },
     draw: function() {
-      var allDefaults, barDefaults, comboDefaults, pieDefaults;
+      var allDefaults, barDefaults, lineDefaults, pieDefaults;
       allDefaults = {
         width: 500,
         height: 300,
@@ -64,13 +64,8 @@
         this.options = $.extend(barDefaults, this.options);
         this.chart = new google.visualization.BarChart(this.target.get(0));
       } else if (this.chartType === 'line') {
-        comboDefaults = {
-          curveType: 'function',
-          pointSize: 4,
-          legend: 'none'
-        };
-        comboDefaults = $.extend(allDefaults, comboDefaults);
-        this.options = $.extend(comboDefaults, this.options);
+        lineDefaults = lineDefaults = $.extend(allDefaults, lineDefaults);
+        this.options = $.extend(lineDefaults, this.options);
         this.chart = new google.visualization.LineChart(this.target.get(0));
       } else if (this.chartType === 'pie') {
         pieDefaults = {};

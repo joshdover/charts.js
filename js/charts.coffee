@@ -70,13 +70,10 @@ methods =
     
     else if this.chartType == 'line'
           
-      comboDefaults = 
-        curveType:'function'
-        pointSize:4
-        legend:'none'
+      lineDefaults = 
 
-      comboDefaults = $.extend(allDefaults, comboDefaults)
-      this.options = $.extend(comboDefaults, this.options)
+      lineDefaults = $.extend(allDefaults, lineDefaults)
+      this.options = $.extend(lineDefaults, this.options)
         
       # create bar chart object
       # this[0] accesses the first DOM element of the jQuery selector used eg. - $("#myChart")[0] would return the first DOM element with the id 'myChart'
