@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Charts.js by gerfuls</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/gerfuls/charts.js">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/gerfuls/charts.js/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/gerfuls/charts.js/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Charts.js</h1>
+          <p>A jQuery plugin to make using Google Charts super simple, without losing any customizability.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/gerfuls">gerfuls</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>Charts.js</h1>
+
+<p>A jQuery plugin to make using Google Charts super simple, without losing customizability.</p>
+
+<h2>Basic Setup</h2>
+
+<p>Include the appropriate libraries in your <code>&lt;head&gt;</code> tag</p>
+
+<div class="highlight"><pre><span class="c">&lt;!-- jQuery --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Google JS-API --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"https://www.google.com/jsapi"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Charts.js --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/charts.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+
+<p>Load the Google Charts Library</p>
+
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="c1">// Load the visualization library</span>
+<span class="nx">google</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">'visualization'</span><span class="p">,</span> <span class="s1">'1.0'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'packages'</span><span class="o">:</span><span class="p">[</span><span class="s1">'corechart'</span><span class="p">]});</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<p>On the Google Charts callback, make our charts using Charts.js</p>
+
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nx">google</span><span class="p">.</span><span class="nx">setOnLoadCallback</span><span class="p">(</span><span class="nx">makeCharts</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">makeCharts</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">"#chart-bar"</span><span class="p">).</span><span class="nx">chart</span><span class="p">({</span>
+    <span class="nx">chartType</span><span class="o">:</span><span class="s1">'bar'</span><span class="p">,</span>
+    <span class="nx">columnTitles</span><span class="o">:</span><span class="p">[</span><span class="s1">'Answer'</span><span class="p">,</span> <span class="s1">'Frequency'</span><span class="p">],</span>
+    <span class="nx">jsonData</span><span class="o">:</span> <span class="p">[</span>
+                <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"2"</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"3"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">"4"</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+              <span class="p">]</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<h2>Specifying Data</h2>
+
+<p>You may either pass json directly upon creating the chart, or give the chart a url to make an AJAX request for the data. Currently, all data injected into the chart using the <code>google.visualization.arrayToDataTable()</code> method which you can read about <a href="https://google-developers.appspot.com/chart/interactive/docs/datatables_dataviews#arraytodatatable">here</a>.</p>
+
+<h3>Passing JSON on creation</h3>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#chart-bar"</span><span class="p">).</span><span class="nx">chart</span><span class="p">({</span>
+  <span class="nx">chartType</span><span class="o">:</span><span class="s1">'bar'</span><span class="p">,</span>
+  <span class="nx">columnTitles</span><span class="o">:</span><span class="p">[</span><span class="s1">'Answer'</span><span class="p">,</span> <span class="s1">'Frequency'</span><span class="p">],</span>
+  <span class="nx">jsonData</span><span class="o">:</span> <span class="p">[</span>
+              <span class="p">[</span><span class="s2">"1"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="s2">"2"</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+              <span class="p">[</span><span class="s2">"3"</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="s2">"4"</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+            <span class="p">]</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>Pass a URL</h3>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#chart-bar"</span><span class="p">).</span><span class="nx">chart</span><span class="p">({</span>
+  <span class="nx">chartType</span><span class="o">:</span><span class="s1">'bar'</span><span class="p">,</span>
+  <span class="nx">columnTitles</span><span class="o">:</span><span class="p">[</span><span class="s1">'Answer'</span><span class="p">,</span> <span class="s1">'Frequency'</span><span class="p">],</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">'demo.json'</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>If you have used a URL for data, you can ask the chart to refresh its data by calling</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#chart"</span><span class="p">).</span><span class="nx">chart</span><span class="p">(</span><span class="s2">"update"</span><span class="p">);</span>
+</pre></div>
+
+<h2>Customizing</h2>
+
+<p>Google Charts allows for tons of customization, you and Charts.js supports all of these customization options. </p>
+
+<h3>Chart Types</h3>
+
+<p>Currently Charts.js only supports Bar, Pie, and Line graphs, but much more support is on its way. Simply specify the type of graph you want on initialization, or change it later.</p>
+
+<div class="highlight"><pre><span class="c1">// Specify at creation</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#chart"</span><span class="p">).</span><span class="nx">chart</span><span class="p">({</span>
+  <span class="nx">chartType</span><span class="o">:</span><span class="s1">'bar'</span><span class="p">,</span> <span class="c1">// valid values: 'bar', 'pie', or 'line'</span>
+  <span class="nx">columnTitles</span><span class="o">:</span><span class="p">[</span><span class="s1">'Answer'</span><span class="p">,</span> <span class="s1">'Frequency'</span><span class="p">],</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">'demo.json'</span>
+<span class="p">});</span>
+
+<span class="c1">// or later on...</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#chart"</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">"chart"</span><span class="p">).</span><span class="nx">chartType</span> <span class="o">=</span> <span class="s1">'bar'</span><span class="p">;</span>
+
+<span class="c1">// ...but don't forget to refresh the chart</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">"#chart"</span><span class="p">).</span><span class="nx">chart</span><span class="p">(</span><span class="s2">"update"</span><span class="p">);</span>
+</pre></div>
+
+<h3>Google Charts Options</h3>
+
+<p>You may specify any options from the <a href="https://google-developers.appspot.com/chart/interactive/docs/customizing_charts">Google Charts API</a> by passing them to the <code>options</code> item.</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">"#chart"</span><span class="p">).</span><span class="nx">chart</span><span class="p">({</span>
+  <span class="nx">chartType</span><span class="o">:</span><span class="s1">'bar'</span><span class="p">,</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">'demo.json'</span><span class="p">,</span>
+  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">height</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="nx">width</span><span class="o">:</span> <span class="mi">1200</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
