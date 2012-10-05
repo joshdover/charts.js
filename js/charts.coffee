@@ -43,7 +43,7 @@ methods =
       objectData.jsonData.splice(0,0,objectData.columnTitles)
   
     # add data to DataTable
-    objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData)
+    objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData, (objectData.chartType == 'candlestick') ? true : false)
     
     # draw our chart
     methods.draw.apply(this, arguments)    
@@ -82,7 +82,32 @@ methods =
       
       # create combo chart at specified DOM element
       objectData.chart = new google.visualization.ComboChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'column'
+      
+      # create column chart at specified DOM element
+      objectData.chart = new google.visualization.ColumnChart( objectData.target.get(0) )
     
+    else if objectData.chartType == 'area'
+      
+      # create area chart at specified DOM element
+      objectData.chart = new google.visualization.AreaChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'bubble'
+      
+      # create bubble chart at specified DOM element
+      objectData.chart = new google.visualization.BubbleChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'candlestick'
+      
+      # create candlestick chart at specified DOM element
+      objectData.chart = new google.visualization.CandlestickChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'scatter'
+      
+      # create scatter chart at specified DOM element
+      objectData.chart = new google.visualization.ScatterChart( objectData.target.get(0) )
+
     # draw the chart
     objectData.chart.draw(objectData.chartData, objectData.options)
     objectData.chartDrawn = true
