@@ -82,6 +82,11 @@ methods =
       
       # create combo chart at specified DOM element
       objectData.chart = new google.visualization.ComboChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'column'
+      
+      # create combo chart at specified DOM element
+      objectData.chart = new google.visualization.ColumnChart( objectData.target.get(0) )
     
     # draw the chart
     objectData.chart.draw(objectData.chartData, objectData.options)

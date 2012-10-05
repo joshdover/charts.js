@@ -17,24 +17,34 @@
     
     // When finished loading, make our charts using Charts.js
     google.setOnLoadCallback(makeCharts);
+    
+    testData = [
+                ['Month', 'Preciption (in)', 'Temperature (F)'],
+                ["January",1,45],
+                ["Februrary",4,38],
+                ["March",1,54],
+                ["April",3,78]
+              ];
   
     function makeCharts() {
       $("#chart-bar").chart({
         chartType:'bar',
-        columnTitles:['Answer', 'Frequency'],
-        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+        jsonData: testData
+      });
+      
+      $("#chart-column").chart({
+        chartType:'column',
+        jsonData: testData
       });
       
       $("#chart-pie").chart({
         chartType:'pie',
-        columnTitles:['Answer', 'Frequency'],
-        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+        jsonData: testData
       });
       
       $("#chart-line").chart({
         chartType:'line',
-        columnTitles:['Answer', 'Frequency'],
-        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+        jsonData: testData
       });
       
       $("#chart-combo").chart({
@@ -68,6 +78,7 @@
   </head>
   <body>
     <div id="chart-bar"></div>
+    <div id="chart-column"></div>
     <div id="chart-pie"></div>
     <div id="chart-line"></div>
     <div id="chart-combo"></div>
