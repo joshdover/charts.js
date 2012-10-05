@@ -90,8 +90,13 @@ methods =
     
     else if objectData.chartType == 'area'
       
-      # create area area at specified DOM element
+      # create area chart at specified DOM element
       objectData.chart = new google.visualization.AreaChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'bubble'
+      
+      # create bubble chart at specified DOM element
+      objectData.chart = new google.visualization.BubbleChart( objectData.target.get(0) )
 
     # draw the chart
     objectData.chart.draw(objectData.chartData, objectData.options)

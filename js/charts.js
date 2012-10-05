@@ -67,6 +67,8 @@
         objectData.chart = new google.visualization.ColumnChart(objectData.target.get(0));
       } else if (objectData.chartType === 'area') {
         objectData.chart = new google.visualization.AreaChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'bubble') {
+        objectData.chart = new google.visualization.BubbleChart(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
       return objectData.chartDrawn = true;
