@@ -53,64 +53,34 @@ methods =
     
     # universal defaults
     allDefaults = 
-      width:500
-      height:300
+      width:800
+      height:500
       animation:
         duration:1000
         easing:'inAndOut'
-        
-        
+    
+    # overload allDefaults with user specified options    
+    objectData.options = $.extend(allDefaults, objectData.options)    
+    
     # chartType specifics
     if objectData.chartType == 'bar'
-    
-      # default options for chartType = 'bar'
-      barDefaults =
-        legend:'none'
-        hAxis:
-          minValue:0
-          
-      # overload allDefaults with barDefaults, overload barDefaults with user specified options
-      barDefaults = $.extend(allDefaults, barDefaults)
-      objectData.options = $.extend(barDefaults, objectData.options)
     
       # create bar chart at specified DOM element
       objectData.chart = new google.visualization.BarChart( objectData.target.get(0) );
     
     else if objectData.chartType == 'line'
-      
-      # default options for chartType = 'line' 
-      lineDefaults = {}
-      
-      # overload allDefaults with lineDefaults, overload lineDefaults with user specified options
-      lineDefaults = $.extend(allDefaults, lineDefaults)
-      objectData.options = $.extend(lineDefaults, objectData.options)
-        
+    
       # create line chart at specified DOM element
       objectData.chart = new google.visualization.LineChart( objectData.target.get(0) )
       
     else if objectData.chartType == 'pie'
-      
-      # default options for chartType = 'pie' 
-      pieDefaults = {}
-      
-      # overload allDefaults with pieDefaults, overload pieDefaults with user specified options
-      pieDefaults = $.extend(allDefaults, pieDefaults)
-      objectData.options = $.extend(pieDefaults, objectData.options)
-      
+       
       # create pie chart at specified DOM element
       objectData.chart = new google.visualization.PieChart( objectData.target.get(0) )
-      
     
     else if objectData.chartType == 'combo'
-    
-      # default options for chartType = 'combo' 
-      comboDefaults = {}
       
-      # overload allDefaults with pieDefaults, overload pieDefaults with user specified options
-      comboDefaults = $.extend(allDefaults, comboDefaults)
-      objectData.options = $.extend(comboDefaults, objectData.options)
-      
-      # create pie chart at specified DOM element
+      # create combo chart at specified DOM element
       objectData.chart = new google.visualization.ComboChart( objectData.target.get(0) )
     
     # draw the chart

@@ -44,40 +44,24 @@
       return methods.draw.apply(this, arguments);
     },
     draw: function() {
-      var allDefaults, barDefaults, comboDefaults, lineDefaults, objectData, pieDefaults;
+      var allDefaults, objectData;
       objectData = this.data('chart');
       allDefaults = {
-        width: 500,
-        height: 300,
+        width: 800,
+        height: 500,
         animation: {
           duration: 1000,
           easing: 'inAndOut'
         }
       };
+      objectData.options = $.extend(allDefaults, objectData.options);
       if (objectData.chartType === 'bar') {
-        barDefaults = {
-          legend: 'none',
-          hAxis: {
-            minValue: 0
-          }
-        };
-        barDefaults = $.extend(allDefaults, barDefaults);
-        objectData.options = $.extend(barDefaults, objectData.options);
         objectData.chart = new google.visualization.BarChart(objectData.target.get(0));
       } else if (objectData.chartType === 'line') {
-        lineDefaults = {};
-        lineDefaults = $.extend(allDefaults, lineDefaults);
-        objectData.options = $.extend(lineDefaults, objectData.options);
         objectData.chart = new google.visualization.LineChart(objectData.target.get(0));
       } else if (objectData.chartType === 'pie') {
-        pieDefaults = {};
-        pieDefaults = $.extend(allDefaults, pieDefaults);
-        objectData.options = $.extend(pieDefaults, objectData.options);
         objectData.chart = new google.visualization.PieChart(objectData.target.get(0));
       } else if (objectData.chartType === 'combo') {
-        comboDefaults = {};
-        comboDefaults = $.extend(allDefaults, comboDefaults);
-        objectData.options = $.extend(comboDefaults, objectData.options);
         objectData.chart = new google.visualization.ComboChart(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
