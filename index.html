@@ -47,6 +47,11 @@
         jsonData: testData
       });
       
+      $("#chart-area").chart({
+        chartType:'area',
+        jsonData: testData
+      })
+      
       $("#chart-combo").chart({
         chartType:'combo',
         jsonData:[
@@ -81,6 +86,7 @@
     <div id="chart-column"></div>
     <div id="chart-pie"></div>
     <div id="chart-line"></div>
+    <div id="chart-area"></div>
     <div id="chart-combo"></div>
   </body>
 </html>

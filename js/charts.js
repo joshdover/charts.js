@@ -65,6 +65,8 @@
         objectData.chart = new google.visualization.ComboChart(objectData.target.get(0));
       } else if (objectData.chartType === 'column') {
         objectData.chart = new google.visualization.ColumnChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'area') {
+        objectData.chart = new google.visualization.AreaChart(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
       return objectData.chartDrawn = true;
