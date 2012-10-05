@@ -35,12 +35,14 @@
       }
     },
     parse: function() {
-      var objectData;
+      var objectData, _ref;
       objectData = this.data('chart');
       if (!(objectData.columnTitles === void 0) && (!(objectData.url === void 0) || ((objectData.url === void 0) && !objectData.chartDrawn))) {
         objectData.jsonData.splice(0, 0, objectData.columnTitles);
       }
-      objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData);
+      objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData, (_ref = objectData.chartType === 'candlestick') != null ? _ref : {
+        "true": false
+      });
       return methods.draw.apply(this, arguments);
     },
     draw: function() {
@@ -69,6 +71,8 @@
         objectData.chart = new google.visualization.AreaChart(objectData.target.get(0));
       } else if (objectData.chartType === 'bubble') {
         objectData.chart = new google.visualization.BubbleChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'candlestick') {
+        objectData.chart = new google.visualization.CandlestickChart(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
       return objectData.chartDrawn = true;
