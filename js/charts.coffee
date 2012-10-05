@@ -101,6 +101,18 @@ methods =
       objectData.chart = new google.visualization.PieChart( objectData.target.get(0) )
       
     
+    else if objectData.chartType == 'combo'
+    
+      # default options for chartType = 'combo' 
+      comboDefaults = {}
+      
+      # overload allDefaults with pieDefaults, overload pieDefaults with user specified options
+      comboDefaults = $.extend(allDefaults, comboDefaults)
+      objectData.options = $.extend(comboDefaults, objectData.options)
+      
+      # create pie chart at specified DOM element
+      objectData.chart = new google.visualization.ComboChart( objectData.target.get(0) )
+    
     # draw the chart
     objectData.chart.draw(objectData.chartData, objectData.options)
     objectData.chartDrawn = true

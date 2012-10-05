@@ -44,7 +44,7 @@
       return methods.draw.apply(this, arguments);
     },
     draw: function() {
-      var allDefaults, barDefaults, lineDefaults, objectData, pieDefaults;
+      var allDefaults, barDefaults, comboDefaults, lineDefaults, objectData, pieDefaults;
       objectData = this.data('chart');
       allDefaults = {
         width: 500,
@@ -74,6 +74,11 @@
         pieDefaults = $.extend(allDefaults, pieDefaults);
         objectData.options = $.extend(pieDefaults, objectData.options);
         objectData.chart = new google.visualization.PieChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'combo') {
+        comboDefaults = {};
+        comboDefaults = $.extend(allDefaults, comboDefaults);
+        objectData.options = $.extend(comboDefaults, objectData.options);
+        objectData.chart = new google.visualization.ComboChart(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
       return objectData.chartDrawn = true;
