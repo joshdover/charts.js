@@ -73,6 +73,8 @@
         objectData.chart = new google.visualization.BubbleChart(objectData.target.get(0));
       } else if (objectData.chartType === 'candlestick') {
         objectData.chart = new google.visualization.CandlestickChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'scatter') {
+        objectData.chart = new google.visualization.ScatterChart(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
       return objectData.chartDrawn = true;

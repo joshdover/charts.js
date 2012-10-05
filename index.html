@@ -66,6 +66,19 @@
           ['Fri', 68, 66, 22, 15]]
       });
       
+      $("#chart-scatter").chart({
+        chartType:'scatter',
+        jsonData: [
+                    ['Age', 'Weight'],
+                    [ 8,      12],
+                    [ 4,      5.5],
+                    [ 11,     14],
+                    [ 4,      5],
+                    [ 3,      3.5],
+                    [ 6.5,    7]
+                  ]
+      });
+      
       $("#chart-combo").chart({
         chartType:'combo',
         jsonData:[
@@ -103,6 +116,7 @@
     <div id="chart-area"></div>
     <div id="chart-bubble"></div>
     <div id="chart-candlestick"></div>
+    <div id="chart-scatter"></div>
     <div id="chart-combo"></div>
   </body>
 </html>

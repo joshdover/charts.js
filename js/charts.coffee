@@ -102,6 +102,11 @@ methods =
       
       # create candlestick chart at specified DOM element
       objectData.chart = new google.visualization.CandlestickChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'scatter'
+      
+      # create scatter chart at specified DOM element
+      objectData.chart = new google.visualization.ScatterChart( objectData.target.get(0) )
 
     # draw the chart
     objectData.chart.draw(objectData.chartData, objectData.options)
