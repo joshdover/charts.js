@@ -23,14 +23,15 @@
       return methods.update.apply(this, arguments);
     },
     update: function() {
-      var objectData;
+      var objectData, target;
       objectData = this.data('chart');
       if (objectData.url === void 0) {
         return methods.parse.apply(this, arguments);
       } else {
+        target = this;
         return $.getJSON(objectData.url, function(data) {
           objectData.jsonData = data;
-          return methods.parse.apply(this, arguments);
+          return methods.parse.apply(target, arguments);
         });
       }
     },

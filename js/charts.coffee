@@ -29,9 +29,10 @@ methods =
       methods.parse.apply(this, arguments)
     else
       # get raw data
+      target = this
       $.getJSON(objectData.url, (data) ->
         objectData.jsonData = data
-        methods.parse.apply(this, arguments)
+        methods.parse.apply(target, arguments)
       )
     
   parse: ->
