@@ -1,4 +1,4 @@
-# Charts.js
+# Charts.js 0.2
 
 A jQuery plugin to make using Google Charts super simple, without losing customizability.
 
@@ -26,7 +26,7 @@ google.load('visualization', '1.0', {'packages':['corechart']});
 </script>
 ```
 
-On the Google Charts callback, make our charts using Charts.js
+On the Google Charts callback, draw your charts using Charts.js
 
 ```html
 <script type="text/javascript">
@@ -35,12 +35,10 @@ function makeCharts() {
   $("#chart-bar").chart({
     chartType:'bar',
     columnTitles:['Answer', 'Frequency'],
-    jsonData: [
-                ["1",1],
-                ["2",4],
-                ["3",1],
-                ["4",3]
-              ]
+    jsonData: [["1",1],
+              ["2",4],
+              ["3",1],
+              ["4",3]]
   });
 }
 </script>
@@ -50,9 +48,12 @@ function makeCharts() {
 
 You may either pass json directly upon creating the chart, or give the chart a url to make an AJAX request for the data. Currently, all data injected into the chart using the `google.visualization.arrayToDataTable()` method which you can read about [here](https://google-developers.appspot.com/chart/interactive/docs/datatables_dataviews#arraytodatatable).
 
-### Passing JSON on creation
+### Passing JSON
+
+JSON needs to be in a format where each row represents a data point, and each column represents a series. Column titles may be included in either the JSON or the `columnTitles` attribute. Column data types are implicit.
+
 ```javascript
-$("#chart-bar").chart({
+$('#chart').chart({
   chartType:'bar',
   columnTitles:['Answer', 'Frequency'],
   jsonData: [
@@ -64,19 +65,22 @@ $("#chart-bar").chart({
 });
 ```
 
-### Pass a URL
+### Passing a URL
+
+Make sure the JSON returned by the server matches the format above.
+
 ```javascript
-$("#chart-bar").chart({
+$('#chart').chart({
   chartType:'bar',
   columnTitles:['Answer', 'Frequency'],
   url: 'demo.json'
 });
 ```
 
-If you have used a URL for data, you can ask the chart to refresh its data by calling
+If you have used a URL for data, you can ask the chart to refresh its data by calling `update`.
 
 ```javascript
-$("#chart").chart("update");
+$('#chart').chart('update');
 ```
 
 ## Customizing
@@ -85,23 +89,21 @@ Google Charts allows for tons of customization, you and Charts.js supports all o
 
 ### Chart Types
 
-Currently Charts.js only supports Bar, Pie, and Line graphs, but much more support is on its way. Simply specify the type of graph you want on initialization, or change it later.
+Charts.js supports `'bar'`, `'column'`, `'line'`, `'pie'`, `'combo'`, `'area'`, `'bubble'`, `'candlestick'`, and `'scatter'` graphs. Simply specify the type of graph you want on creation. You can also change it later and redraw the chart to see the changes.
 
 ```javascript
-// Specify at creation
-
-$("#chart").chart({
-  chartType:'bar', // valid values: 'bar', 'pie', or 'line'
+// specify at creation
+$('#chart').chart({
+  chartType:'bar',
   columnTitles:['Answer', 'Frequency'],
   url: 'demo.json'
 });
 
-// or later on...
+// or change it later
+$('#chart').data('chart').chartType = 'bar';
 
-$("#chart").data("chart").chartType = 'bar';
-
-// ...but don't forget to refresh the chart
-$("#chart").chart("update");
+// but don't forget to redraw the chart
+$('#chart').chart('draw');
 ```
 
 ### Google Charts Options
@@ -109,7 +111,7 @@ $("#chart").chart("update");
 You may specify any options from the [Google Charts API](https://google-developers.appspot.com/chart/interactive/docs/customizing_charts) by passing them to the `options` item.
 
 ```javascript
-$("#chart").chart({
+$('#chart').chart({
   chartType:'bar',
   url: 'demo.json',
   options: {
@@ -117,3 +119,11 @@ $("#chart").chart({
     width: 1200
   }
 });
+```
+
+Options can also be changed after creation by updating the `options` object and redrawing the chart
+
+```javascript
+$('#chart').data('chart').options.height = 1000;
+$('#chart').chart('draw');
+```
