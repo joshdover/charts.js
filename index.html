@@ -17,32 +17,100 @@
     
     // When finished loading, make our charts using Charts.js
     google.setOnLoadCallback(makeCharts);
+    
+    testData = [
+                ['Month', 'Preciption (in)', 'Temperature (F)'],
+                ["January",1,45],
+                ["Februrary",4,38],
+                ["March",1,54],
+                ["April",3,78]
+              ];
   
     function makeCharts() {
       $("#chart-bar").chart({
         chartType:'bar',
-        columnTitles:['Answer', 'Frequency'],
-        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+        jsonData: testData
+      });
+      
+      $("#chart-column").chart({
+        chartType:'column',
+        jsonData: testData
       });
       
       $("#chart-pie").chart({
         chartType:'pie',
-        columnTitles:['Answer', 'Frequency'],
-        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+        jsonData: testData
       });
       
       $("#chart-line").chart({
         chartType:'line',
-        columnTitles:['Answer', 'Frequency'],
-        jsonData: [["1",1],["2",4],["3",1],["4",3]]
+        jsonData: testData
+      });
+      
+      $("#chart-area").chart({
+        chartType:'area',
+        jsonData: testData
+      });
+      
+      $("#chart-bubble").chart({
+        chartType:'bubble',
+        jsonData: testData
+      });
+      
+      $("#chart-candlestick").chart({
+        chartType:'candlestick',
+        jsonData: [['Mon', 20, 28, 38, 45],
+          ['Tue', 31, 38, 55, 66],
+          ['Wed', 50, 55, 77, 80],
+          ['Thu', 77, 77, 66, 50],
+          ['Fri', 68, 66, 22, 15]]
+      });
+      
+      $("#chart-scatter").chart({
+        chartType:'scatter',
+        jsonData: [
+          ['Age', 'Weight', 'Height'],
+          [ 8,      12,       4.5],
+          [ 4,      5.5,      3.2],
+          [ 11,     14,       5.0],
+          [ 4,      5,        3.4],
+          [ 3,      3.5,      2.1],
+          [ 6.5,    7,        4.2]
+        ]
+      });
+      
+      $("#chart-combo").chart({
+        chartType:'combo',
+        jsonData:[
+          ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+          ['2004/05',  165,      938,         522,             998,           450,      614.6],
+          ['2005/06',  135,      1120,        599,             1268,          288,      682],
+          ['2006/07',  157,      1167,        587,             807,           397,      623],
+          ['2007/08',  139,      1110,        615,             968,           215,      609.4],
+          ['2008/09',  136,      691,         629,             1026,          366,      569.6]
+        ],
+        options: {
+          seriesType: 'bars',
+          series: {
+            5: {
+              type: 'line'
+            }
+          }
+        }
       });
     }
     </script>
   </head>
   <body>
     <div id="chart-bar"></div>
+    <div id="chart-column"></div>
     <div id="chart-pie"></div>
     <div id="chart-line"></div>
+    <div id="chart-area"></div>
+    <div id="chart-bubble"></div>
+    <div id="chart-candlestick"></div>
+    <div id="chart-scatter"></div>
+    <div id="chart-combo"></div>
   </body>
 </html>
   

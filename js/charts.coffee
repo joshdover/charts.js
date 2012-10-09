@@ -1,12 +1,12 @@
 $ = jQuery
 
-exampleChartData = 0
-
 methods = 
   init: (allOptions) ->
-    data = this.data('chart')
+    # load the existing data from the chart if there is any
+    objectData = this.data('chart')
     
-    if !data
+    # create new data based on passed object
+    if !objectData
       this.data('chart', {
         url: allOptions.url
         chartType: allOptions.chartType
@@ -17,86 +17,114 @@ methods =
         jsonData: allOptions.jsonData
         chartDrawn: false
       })
-
+    
+    # update our chart's data
     methods.update.apply(this, arguments)
       
   update: ->
     objectData = this.data('chart')
     
-    if (objectData.url is undefined)
-      methods.parse.apply(objectData, arguments)
-    else
+    # skip the ajax request if there was no URL passed AND we have jsonData loaded
+    if (objectData.url is undefined && !(objectData.jsonData is undefined))
+      methods.parse.apply(this, arguments)
+    else if !(objectData.url is undefined)
       # get raw data
+      target = this
       $.getJSON(objectData.url, (data) ->
         objectData.jsonData = data
-        methods.parse.apply(objectData, arguments)
+        methods.parse.apply(target, arguments)
       )
+    else
+      $.error('No chart data supplied')
     
-  parse: ->             
+  parse: ->
+    objectData = this.data('chart')
+          
     # add columns to DataTable
-    if !(this.columnTitles is undefined)
-      this.jsonData.splice(0,0,this.columnTitles)
+    # only if there are columns specified AND we have loaded new data from a URL
+    if !(objectData.columnTitles is undefined) and (!(objectData.url is undefined) or ((objectData.url is undefined) and !objectData.chartDrawn))
+      objectData.jsonData.splice(0,0,objectData.columnTitles)
   
     # add data to DataTable
-    this.chartData = google.visualization.arrayToDataTable(this.jsonData)
-       
+    objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData, (objectData.chartType == 'candlestick') ? true : false)
+    
+    # draw our chart
     methods.draw.apply(this, arguments)    
       
   draw: ->
+    objectData = this.data('chart')
+    
     # universal defaults
     allDefaults = 
-      width:500
-      height:300
+      width:800
+      height:500
       animation:
-        duration:2000
+        duration:1000
         easing:'inAndOut'
-        
-        
-    # chart specifics
-    if this.chartType == 'bar'
     
-      # define default options
-      barDefaults =
-        legend:'none'
-        hAxis:
-          minValue:0
-          
-      barDefaults = $.extend(allDefaults, barDefaults)
-      this.options = $.extend(barDefaults, this.options)
+    # overload allDefaults with user specified options    
+    objectData.options = $.extend(allDefaults, objectData.options)    
     
-      # create bar chart object
-      # this[0] accesses the first DOM element of the jQuery selector used eg. - $("#myChart")[0] would return the first DOM element with the id 'myChart'
-      this.chart = new google.visualization.BarChart( this.target.get(0) );
+    # chartType specifics
+    if objectData.chartType == 'bar'
     
-    else if this.chartType == 'line'
-          
-      lineDefaults = 
+      # create bar chart at specified DOM element
+      objectData.chart = new google.visualization.BarChart( objectData.target.get(0) );
+    
+    else if objectData.chartType == 'line'
+    
+      # create line chart at specified DOM element
+      objectData.chart = new google.visualization.LineChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'pie'
+       
+      # create pie chart at specified DOM element
+      objectData.chart = new google.visualization.PieChart( objectData.target.get(0) )
+    
+    else if objectData.chartType == 'combo'
+      
+      # create combo chart at specified DOM element
+      objectData.chart = new google.visualization.ComboChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'column'
+      
+      # create column chart at specified DOM element
+      objectData.chart = new google.visualization.ColumnChart( objectData.target.get(0) )
+    
+    else if objectData.chartType == 'area'
+      
+      # create area chart at specified DOM element
+      objectData.chart = new google.visualization.AreaChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'bubble'
+      
+      # create bubble chart at specified DOM element
+      objectData.chart = new google.visualization.BubbleChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'candlestick'
+      
+      # create candlestick chart at specified DOM element
+      objectData.chart = new google.visualization.CandlestickChart( objectData.target.get(0) )
+      
+    else if objectData.chartType == 'scatter'
+      
+      # create scatter chart at specified DOM element
+      objectData.chart = new google.visualization.ScatterChart( objectData.target.get(0) )
 
-      lineDefaults = $.extend(allDefaults, lineDefaults)
-      this.options = $.extend(lineDefaults, this.options)
-        
-      # create bar chart object
-      # this[0] accesses the first DOM element of the jQuery selector used eg. - $("#myChart")[0] would return the first DOM element with the id 'myChart'
-      this.chart = new google.visualization.LineChart( this.target.get(0) )
-      
-    else if this.chartType == 'pie'
-      
-      pieDefaults = {}
-      
-      pieDefaults = $.extend(allDefaults, pieDefaults)
-      this.options = $.extend(pieDefaults, this.options)
-      
-      this.chart = new google.visualization.PieChart( this.target.get(0) )
-      
-    
     # draw the chart
-    this.chart.draw(this.chartData, this.options)
-    this.chartDrawn = true
+    objectData.chart.draw(objectData.chartData, objectData.options)
+    objectData.chartDrawn = true
 
 $.fn.chart = (method) ->
+  
+  # call method specified with all arguments
   if methods[method]
     return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1))
+  
+  # if passed an object, call init with object
   else if typeof method == 'object' or !method
     return methods.init.apply(this, arguments)
+    
+  # error
   else
     $.error('Method ' + method + ' does not exist on jQuery.chart' )
