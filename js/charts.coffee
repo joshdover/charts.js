@@ -24,16 +24,18 @@ methods =
   update: ->
     objectData = this.data('chart')
     
-    # only make ajax request if there was no URL passed
-    if (objectData.url is undefined)
+    # skip the ajax request if there was no URL passed AND we have jsonData loaded
+    if (objectData.url is undefined && !(objectData.jsonData is undefined))
       methods.parse.apply(this, arguments)
-    else
+    else if !(objectData.url is undefined)
       # get raw data
       target = this
       $.getJSON(objectData.url, (data) ->
         objectData.jsonData = data
         methods.parse.apply(target, arguments)
       )
+    else
+      $.error('No chart data supplied')
     
   parse: ->
     objectData = this.data('chart')
