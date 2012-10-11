@@ -4,7 +4,7 @@ methods =
   init: (allOptions) ->
     # load the existing data from the chart if there is any
     objectData = this.data('chart')
-    
+        
     # create new data based on passed object
     if !objectData
       this.data('chart', {
@@ -120,14 +120,19 @@ methods =
 
 $.fn.chart = (method) ->
   
-  # call method specified with all arguments
-  if methods[method]
-    return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1))
-  
-  # if passed an object, call init with object
-  else if typeof method == 'object' or !method
-    return methods.init.apply(this, arguments)
+  return this.each( ->
+
+    $this = $(this)
     
-  # error
-  else
-    $.error('Method ' + method + ' does not exist on jQuery.chart' )
+    # call method specified with all arguments
+    if methods[method]
+      methods[ method ].apply( $this, Array.prototype.slice.call( arguments, 1))
+  
+    # if passed an object, call init with object
+    else if typeof method == 'object' or !method    
+      methods.init.apply($this, [method])
+    
+    # error
+    else
+      $.error('Method ' + method + ' does not exist on jQuery.chart' )
+  )
