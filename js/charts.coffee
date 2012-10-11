@@ -48,8 +48,11 @@ methods =
     # add data to DataTable
     objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData, (objectData.chartType == 'candlestick') ? true : false)
     
-    # draw our chart
-    methods.draw.apply(this, arguments)    
+    # draw our chart, if chart already exists, just redraw the chart (allows for animations)
+    if objectData.chartDrawn
+      objectData.chart.draw(objectData.chartData, objectData.options)
+    else
+      methods.draw.apply(this, arguments)    
       
   draw: ->
     objectData = this.data('chart')
@@ -63,7 +66,7 @@ methods =
         easing:'inAndOut'
     
     # overload allDefaults with user specified options    
-    objectData.options = $.extend(allDefaults, objectData.options)    
+    objectData.options = $.extend(allDefaults, objectData.options) 
     
     # chartType specifics
     if objectData.chartType == 'bar'
