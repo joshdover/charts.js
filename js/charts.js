@@ -25,14 +25,16 @@
     update: function() {
       var objectData, target;
       objectData = this.data('chart');
-      if (objectData.url === void 0) {
+      if (objectData.url === void 0 && !(objectData.jsonData === void 0)) {
         return methods.parse.apply(this, arguments);
-      } else {
+      } else if (!(objectData.url === void 0)) {
         target = this;
         return $.getJSON(objectData.url, function(data) {
           objectData.jsonData = data;
           return methods.parse.apply(target, arguments);
         });
+      } else {
+        return $.error('No chart data supplied');
       }
     },
     parse: function() {
@@ -44,7 +46,11 @@
       objectData.chartData = google.visualization.arrayToDataTable(objectData.jsonData, (_ref = objectData.chartType === 'candlestick') != null ? _ref : {
         "true": false
       });
-      return methods.draw.apply(this, arguments);
+      if (objectData.chartDrawn) {
+        return objectData.chart.draw(objectData.chartData, objectData.options);
+      } else {
+        return methods.draw.apply(this, arguments);
+      }
     },
     draw: function() {
       var allDefaults, objectData;
@@ -83,13 +89,17 @@
   };
 
   $.fn.chart = function(method) {
-    if (methods[method]) {
-      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-    } else if (typeof method === 'object' || !method) {
-      return methods.init.apply(this, arguments);
-    } else {
-      return $.error('Method ' + method + ' does not exist on jQuery.chart');
-    }
+    return this.each(function() {
+      var $this;
+      $this = $(this);
+      if (methods[method]) {
+        return methods[method].apply($this, Array.prototype.slice.call(arguments, 1));
+      } else if (typeof method === 'object' || !method) {
+        return methods.init.apply($this, [method]);
+      } else {
+        return $.error('Method ' + method + ' does not exist on jQuery.chart');
+      }
+    });
   };
 
 }).call(this);

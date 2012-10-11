@@ -1,4 +1,4 @@
-# Charts.js 0.2
+# Charts.js 0.3
 
 A jQuery plugin to make using Google Charts super simple, without losing customizability.
 
@@ -127,3 +127,13 @@ Options can also be changed after creation by updating the `options` object and 
 $('#chart').data('chart').options.height = 1000;
 $('#chart').chart('draw');
 ```
+
+# Changelog
+
+## 0.3
+* Fixed animating of charts when data is changed. Animations will work on `$('#chart').chart('update')`. Animations can be customized by changing `options.animation` item.
+* Fixed chainability issues with jQuery
+
+## 0.2
+* Added all chart types included in the Google Charts `corechart` library
+* Added ability to call `draw` to update chart to reflect changed options rather than using `update` for less data polling.
