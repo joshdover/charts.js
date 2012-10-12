@@ -83,6 +83,10 @@ If you have used a URL for data, you can ask the chart to refresh its data by ca
 $('#chart').chart('update');
 ```
 
+### Column Titles
+
+You may either specify the column titles of each series in your array using the `columnTitles` item, or they may be included in the JSON you pass in, or by the data returned by the server at the URL. 
+
 ## Customizing
 
 Google Charts allows for tons of customization, you and Charts.js supports all of these customization options. 
