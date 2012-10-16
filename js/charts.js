@@ -82,6 +82,8 @@
         objectData.chart = new google.visualization.CandlestickChart(objectData.target.get(0));
       } else if (objectData.chartType === 'scatter') {
         objectData.chart = new google.visualization.ScatterChart(objectData.target.get(0));
+      } else if (objectData.chartType === 'gauge') {
+        objectData.chart = new google.visualization.Gauge(objectData.target.get(0));
       }
       objectData.chart.draw(objectData.chartData, objectData.options);
       return objectData.chartDrawn = true;

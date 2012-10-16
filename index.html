@@ -13,7 +13,7 @@
     
     <script type="text/javascript">
     // Load the visualization library
-    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.load('visualization', '1.0', {'packages':['corechart','gauge']});
     
     // When finished loading, make our charts using Charts.js
     google.setOnLoadCallback(makeCharts);
@@ -98,6 +98,22 @@
           }
         }
       });
+      
+      $("#chart-gauge").chart({
+        chartType:'gauge',
+        jsonData: [
+          ['Label', 'Value'],
+          ['Memory', 80],
+          ['CPU', 55],
+          ['Network', 68]
+        ],
+        options: {
+          width: 400, height: 120,
+          redFrom: 90, redTo: 100,
+          yellowFrom:75, yellowTo: 90,
+          minorTicks: 5
+        }
+      })
     }
     </script>
   </head>
@@ -111,6 +127,7 @@
     <div id="chart-candlestick"></div>
     <div id="chart-scatter"></div>
     <div id="chart-combo"></div>
+    <div id="chart-gauge"></div>
   </body>
 </html>
   
